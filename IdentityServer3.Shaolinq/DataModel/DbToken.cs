@@ -29,8 +29,25 @@ namespace IdentityServer3.Shaolinq.DataModel
 		[SizeConstraint(SizeFlexibility = SizeFlexibility.LargeVariable)]
 		public abstract string JsonCode { get; set; }
 
+		public DateTimeOffset Expiry
+		{
+			get
+			{
+				return new DateTimeOffset(ExpiryDateTime, ExpiryOffset);
+			}
+			set
+			{
+				ExpiryDateTime = value.DateTime;
+				ExpiryOffset = value.Offset;
+			}
+		}
+
 		[PersistedMember]
 		[ValueRequired]
-		public abstract DateTimeOffset Expiry { get; set; }
+		public abstract DateTime ExpiryDateTime { get; set; }
+
+		[PersistedMember]
+		[ValueRequired]
+		public abstract TimeSpan ExpiryOffset { get; set; }
 	}
 }

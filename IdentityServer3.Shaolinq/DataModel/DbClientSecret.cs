@@ -20,8 +20,27 @@ namespace IdentityServer3.Shaolinq.DataModel
 		[SizeConstraint(MaximumLength = 2000)]
 		public abstract string Description { get; set; }
 
+		public DateTimeOffset? Expiration
+		{
+			get
+			{
+				return
+					ExpirationDateTime == null || ExpirationOffset == null
+						? (DateTimeOffset?) null
+						: new DateTimeOffset(ExpirationDateTime.Value, ExpirationOffset.Value);
+			}
+			set
+			{
+				ExpirationDateTime = value == null ? (DateTime?) null : value.Value.DateTime;
+				ExpirationOffset = value == null ? (TimeSpan?) null : value.Value.Offset;
+			}
+		}
+
 		[PersistedMember]
-		public abstract DateTime? Expiration { get; set; }
+		public abstract DateTime? ExpirationDateTime { get; set; }
+
+		[PersistedMember]
+		public abstract TimeSpan? ExpirationOffset { get; set; }
 
 		[BackReference]
 		public abstract DbClient Client { get; set; }
