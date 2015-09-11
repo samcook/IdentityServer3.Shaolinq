@@ -21,7 +21,7 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			// TODO include clientsecrets, redirecturis, postlogoutredirecturis, allowedscopes,
 			// identityproviderrestrictions, claims, allowedcustomgranttypes, allowedcorsorigins
-			var client = dataModel.Clients.SingleOrDefault(x => x.Id == Guid.Parse(clientId));
+			var client = dataModel.Clients.SingleOrDefault(x => x.Id == clientId);
 
 			var model = client.ToModel();
 

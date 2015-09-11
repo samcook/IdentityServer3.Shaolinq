@@ -24,7 +24,7 @@ namespace IdentityServer3.Shaolinq.Stores
 				authCode.Id = Guid.NewGuid();
 				authCode.Key = key;
 				authCode.SubjectId = code.SubjectId;
-				authCode.ClientId = Guid.Parse(code.ClientId);
+				authCode.ClientId = code.ClientId;
 				authCode.JsonCode = ConvertToJson(code);
 				authCode.Expiry = DateTimeOffset.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime);
 				authCode.TokenType = this.TokenType;

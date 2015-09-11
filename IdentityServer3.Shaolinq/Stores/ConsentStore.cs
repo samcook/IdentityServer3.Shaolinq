@@ -25,7 +25,7 @@ namespace IdentityServer3.Shaolinq.Stores
 			var results = found.Select(x => new Consent
 			{
 				Subject = x.Subject,
-				ClientId = x.ClientId.ToString(),
+				ClientId = x.ClientId,
 				Scopes = ParseScopes(x.Scopes)
 			});
 
@@ -56,7 +56,7 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			using (var scope = TransactionScopeFactory.CreateReadCommitted())
 			{
-				dataModel.Consents.DeleteWhere(x => x.Subject == subject && x.ClientId == Guid.Parse(client));
+				dataModel.Consents.DeleteWhere(x => x.Subject == subject && x.ClientId == client);
 
 				scope.Complete();
 			}
@@ -66,7 +66,7 @@ namespace IdentityServer3.Shaolinq.Stores
 
 		public Task<Consent> LoadAsync(string subject, string client)
 		{
-			var found = dataModel.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == Guid.Parse(client));
+			var found = dataModel.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == client);
 
 			if (found == null)
 			{
@@ -76,7 +76,7 @@ namespace IdentityServer3.Shaolinq.Stores
 			var result = new Consent
 			{
 				Subject = found.Subject,
-				ClientId = found.ClientId.ToString(),
+				ClientId = found.ClientId,
 				Scopes = ParseScopes(found.Scopes)
 			};
 
@@ -87,7 +87,7 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			using (var scope = TransactionScopeFactory.CreateReadCommitted())
 			{
-				var item = dataModel.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == Guid.Parse(consent.ClientId));
+				var item = dataModel.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
 
 				if (consent.Scopes == null || !consent.Scopes.Any())
 				{
@@ -103,7 +103,7 @@ namespace IdentityServer3.Shaolinq.Stores
 						item = dataModel.Consents.Create();
 						item.Id = Guid.NewGuid();
 						item.Subject = consent.Subject;
-						item.ClientId = Guid.Parse(consent.ClientId);
+						item.ClientId = consent.ClientId;
 					}
 
 					item.Scopes = StringifyScopes(consent.Scopes);

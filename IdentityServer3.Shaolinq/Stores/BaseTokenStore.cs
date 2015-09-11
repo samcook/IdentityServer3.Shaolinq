@@ -61,7 +61,7 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			using (var scope = TransactionScopeFactory.CreateReadCommitted())
 			{
-				DataModel.Tokens.DeleteWhere(x => x.SubjectId == subject && x.ClientId == Guid.Parse(client) && x.TokenType == TokenType);
+				DataModel.Tokens.DeleteWhere(x => x.SubjectId == subject && x.ClientId == client && x.TokenType == TokenType);
 
 				scope.Complete();
 			}

@@ -22,7 +22,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		[PersistedMember]
 		[ValueRequired]
 		[SizeConstraint(MaximumLength = 200)]
-		public abstract Guid ClientId { get; set; }
+		public abstract string ClientId { get; set; }
 
 		[PersistedMember]
 		[ValueRequired]

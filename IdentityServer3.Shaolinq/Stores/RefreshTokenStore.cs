@@ -29,7 +29,7 @@ namespace IdentityServer3.Shaolinq.Stores
 					token.Id = Guid.NewGuid();
 					token.Key = key;
 					token.SubjectId = value.SubjectId;
-					token.ClientId = Guid.Parse(value.ClientId);
+					token.ClientId = value.ClientId;
 					token.JsonCode = ConvertToJson(value); // TODO bug? https://github.com/IdentityServer/IdentityServer3.EntityFramework/issues/65
 					token.TokenType = this.TokenType;
 				}

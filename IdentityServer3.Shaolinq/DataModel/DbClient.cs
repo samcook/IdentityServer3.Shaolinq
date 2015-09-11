@@ -6,16 +6,15 @@ using Shaolinq;
 namespace IdentityServer3.Shaolinq.DataModel
 {
 	[DataAccessObject(Name = "Client")]
-	public abstract class DbClient : DataAccessObject<Guid>
+	public abstract class DbClient : DataAccessObject<string>
 	{
+		[PrimaryKey]
+		[PersistedMember(Name = "ClientId")]
+		[SizeConstraint(MaximumLength = 200)]
+		public override string Id { get; set; }
+
 		[PersistedMember]
 		public abstract bool Enabled { get; set; }
-
-		//[PersistedMember]
-		//[ValueRequired]
-		//[SizeConstraint(MaximumLength = 200)]
-		//[Index(Unique = true)]
-		//public abstract string ClientId { get; set; }
 
 		[RelatedDataAccessObjects]
 		public abstract RelatedDataAccessObjects<DbClientSecret> ClientSecrets { get; }

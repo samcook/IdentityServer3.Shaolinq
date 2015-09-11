@@ -15,7 +15,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		[PersistedMember]
 		[Index(IndexName = "Subject_ClientId_idx", Unique = true, CompositeOrder = 1)]
 		[SizeConstraint(MaximumLength = 200)]
-		public abstract Guid ClientId { get; set; }
+		public abstract string ClientId { get; set; }
 
 		[PersistedMember]
 		[ValueRequired]
