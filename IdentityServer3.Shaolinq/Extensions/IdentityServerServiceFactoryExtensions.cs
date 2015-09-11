@@ -59,7 +59,9 @@ namespace IdentityServer3.Shaolinq.Extensions
 				if (!DataAccessModels.TryGetValue(typeof(TImpl), out dataModel))
 				{
 					dataModel = DataAccessModel.BuildDataAccessModel<TImpl>();
+					//dataModel.Create(DatabaseCreationOptions.DeleteExistingDatabase);
 					DataAccessModels.Add(typeof(TImpl), dataModel);
+					factory.Register(new Registration<TImpl>((TImpl)dataModel));
 				}
 
 				factory.Register(new Registration<TInterface>((TImpl)dataModel));
