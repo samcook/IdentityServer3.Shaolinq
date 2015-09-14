@@ -34,10 +34,9 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			var token = DataModel.Tokens.SingleOrDefault(x => x.Key == key && x.TokenType == TokenType);
 
-			//if (token == null || token.Expiry < DateTimeOffset.UtcNow)
-			if (token == null)
+			if (token == null || token.Expiry < DateTimeOffset.UtcNow)
 			{
-				return null;
+				return Task.FromResult<TToken>(null);
 			}
 
 			return Task.FromResult(ConvertFromJson(token.JsonCode));
