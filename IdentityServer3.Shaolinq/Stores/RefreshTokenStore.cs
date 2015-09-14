@@ -11,8 +11,8 @@ namespace IdentityServer3.Shaolinq.Stores
 {
 	public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
 	{
-		public RefreshTokenStore(IIdentityServerOperationalDataAccessModel dataModel) :
-			base(dataModel, DbTokenType.RefreshToken)
+		public RefreshTokenStore(IIdentityServerOperationalDataAccessModel dataModel, IClientStore clientStore, IScopeStore scopeStore) :
+			base(dataModel, DbTokenType.RefreshToken, clientStore, scopeStore)
 		{
 		}
 

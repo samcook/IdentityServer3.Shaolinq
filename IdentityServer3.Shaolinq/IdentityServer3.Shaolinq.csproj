@@ -97,6 +97,10 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Mapping\Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\ClaimConverter.cs" />
+    <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />
+    <Compile Include="Serialization\ClientConverter.cs" />
+    <Compile Include="Serialization\ScopeConverter.cs" />
     <Compile Include="Services\ClientConfigurationCorsPolicyService.cs" />
     <Compile Include="ShaolinqServiceOptions.cs" />
     <Compile Include="Stores\AuthorizationCodeStore.cs" />

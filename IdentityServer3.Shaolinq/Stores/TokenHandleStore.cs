@@ -10,8 +10,8 @@ namespace IdentityServer3.Shaolinq.Stores
 {
 	public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
 	{
-		public TokenHandleStore(IIdentityServerOperationalDataAccessModel dataModel) :
-			base(dataModel, DbTokenType.TokenHandle)
+		public TokenHandleStore(IIdentityServerOperationalDataAccessModel dataModel, IClientStore clientStore, IScopeStore scopeStore) :
+			base(dataModel, DbTokenType.TokenHandle, clientStore, scopeStore)
 		{
 		}
 

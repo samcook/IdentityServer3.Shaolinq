@@ -10,8 +10,8 @@ namespace IdentityServer3.Shaolinq.Stores
 {
 	public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
 	{
-		public AuthorizationCodeStore(IIdentityServerOperationalDataAccessModel dataModel) :
-			base(dataModel, DbTokenType.AuthorizationCode)
+		public AuthorizationCodeStore(IIdentityServerOperationalDataAccessModel dataModel, IClientStore clientStore, IScopeStore scopeStore) :
+			base(dataModel, DbTokenType.AuthorizationCode, clientStore, scopeStore)
 		{
 		}
 

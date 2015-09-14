@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer3.Core.Models;
+using IdentityServer3.Core.Services;
 using IdentityServer3.Shaolinq.DataModel;
 using IdentityServer3.Shaolinq.DataModel.Interfaces;
+using IdentityServer3.Shaolinq.Serialization;
 using Newtonsoft.Json;
 using Shaolinq;
 
@@ -15,11 +17,15 @@ namespace IdentityServer3.Shaolinq.Stores
 	{
 		protected readonly IIdentityServerOperationalDataAccessModel DataModel;
 		protected readonly DbTokenType TokenType;
+		private readonly IClientStore clientStore;
+		private readonly IScopeStore scopeStore;
 
-		protected BaseTokenStore(IIdentityServerOperationalDataAccessModel dataModel, DbTokenType tokenType)
+		protected BaseTokenStore(IIdentityServerOperationalDataAccessModel dataModel, DbTokenType tokenType, IClientStore clientStore, IScopeStore scopeStore)
 		{
 			this.DataModel = dataModel;
 			this.TokenType = tokenType;
+			this.clientStore = clientStore;
+			this.scopeStore = scopeStore;
 		}
 
 		public abstract Task StoreAsync(string key, TToken value);
@@ -28,7 +34,8 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			var token = DataModel.Tokens.SingleOrDefault(x => x.Key == key && x.TokenType == TokenType);
 
-			if (token == null || token.Expiry < DateTimeOffset.UtcNow)
+			//if (token == null || token.Expiry < DateTimeOffset.UtcNow)
+			if (token == null)
 			{
 				return null;
 			}
@@ -79,13 +86,13 @@ namespace IdentityServer3.Shaolinq.Stores
 			return JsonConvert.DeserializeObject<TToken>(json, GetJsonSerializerSettings());
 		}
 
-		private static JsonSerializerSettings GetJsonSerializerSettings()
+		private JsonSerializerSettings GetJsonSerializerSettings()
 		{
 			var settings = new JsonSerializerSettings();
-			//settings.Converters.Add(new ClaimConverter()); // TODO
-			//settings.Converters.Add(new ClaimsPrincipalConverter()); // TODO
-			//settings.Converters.Add(new ClientConverter(clientStore)); // TODO
-			//settings.Converters.Add(new ScopeConverter(scopeStore)); // TODO
+			settings.Converters.Add(new ClaimConverter()); // TODO
+			settings.Converters.Add(new ClaimsPrincipalConverter()); // TODO
+			settings.Converters.Add(new ClientConverter(clientStore)); // TODO
+			settings.Converters.Add(new ScopeConverter(scopeStore)); // TODO
 			return settings;
 		}
 	}
