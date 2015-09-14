@@ -9,7 +9,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 	public abstract class DbClient : DataAccessObject<string>
 	{
 		[PrimaryKey]
-		[PersistedMember(Name = "ClientId")]
+		[PersistedMember(Name = "ClientId", ShortName = "Id")]
 		[SizeConstraint(MaximumLength = 200)]
 		public override string Id { get; set; }
 
