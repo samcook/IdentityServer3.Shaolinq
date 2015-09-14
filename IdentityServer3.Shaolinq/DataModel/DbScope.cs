@@ -1,4 +1,5 @@
 using System;
+using IdentityServer3.Core.Models;
 using Platform.Validation;
 using Shaolinq;
 
@@ -28,7 +29,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		[PersistedMember]
 		public abstract bool Emphasize { get; set; }
 		[PersistedMember]
-		public abstract int Type { get; set; }
+		public abstract ScopeType Type { get; set; }
 		[RelatedDataAccessObjects]
 		public abstract RelatedDataAccessObjects<DbScopeClaim> ScopeClaims { get; }
 		[PersistedMember]
