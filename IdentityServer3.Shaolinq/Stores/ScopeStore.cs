@@ -19,30 +19,46 @@ namespace IdentityServer3.Shaolinq.Stores
 
 		public Task<IEnumerable<Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
 		{
-			// TODO include scopeclaims
-			var scopes = dataModel.Scopes.Select(x => x);
+			var query =
+				from scope in dataModel.Scopes
+				join scopeClaim in dataModel.ScopeClaims.DefaultIfEmpty() on scope equals scopeClaim.Scope
+				select new
+				{
+					Scope = scope,
+					ScopeClaim = scopeClaim
+				};
 
 			if (scopeNames != null && scopeNames.Any())
 			{
-				scopes = scopes.Where(x => scopeNames.Contains(x.Name));
+				query = query.Where(x => scopeNames.Contains(x.Scope.Name));
 			}
 
-			var model = scopes.ToList().Select(x => x.ToModel());
+			var scopes = query.ToLookup(x => x.Scope, x => x.ScopeClaim);
+
+			var model = scopes.Select(x => x.ToModel());
 
 			return Task.FromResult(model);
 		}
 
 		public Task<IEnumerable<Scope>> GetScopesAsync(bool publicOnly = true)
 		{
-			// TODO include scopeclaims
-			var scopes = dataModel.Scopes.Select(x => x);
+			var query =
+				from scope in dataModel.Scopes
+				join scopeClaim in dataModel.ScopeClaims.DefaultIfEmpty() on scope equals scopeClaim.Scope
+				select new
+				{
+					Scope = scope,
+					ScopeClaim = scopeClaim
+				};
 
 			if (publicOnly)
 			{
-				scopes = scopes.Where(x => x.ShowInDiscoveryDocument);
+				query = query.Where(x => x.Scope.ShowInDiscoveryDocument);
 			}
 
-			var model = scopes.ToList().Select(x => x.ToModel());
+			var scopes = query.ToLookup(x => x.Scope, x => x.ScopeClaim);
+			
+			var model = scopes.Select(x => x.ToModel());
 
 			return Task.FromResult(model);
 		}
