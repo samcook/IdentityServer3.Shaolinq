@@ -110,6 +110,7 @@
     <Compile Include="Stores\RefreshTokenStore.cs" />
     <Compile Include="Stores\ScopeStore.cs" />
     <Compile Include="Stores\TokenHandleStore.cs" />
+    <Compile Include="TokenCleanup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
