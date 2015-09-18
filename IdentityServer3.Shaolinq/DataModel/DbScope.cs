@@ -8,6 +8,16 @@ namespace IdentityServer3.Shaolinq.DataModel
 	[DataAccessObject(Name = "Scope")]
 	public abstract class DbScope : DataAccessObject<Guid>
 	{
+		public DbScope SetDefaults()
+		{
+			this.Type = ScopeType.Resource;
+			this.IncludeAllClaimsForUser = false;
+			this.Enabled = true;
+			this.ShowInDiscoveryDocument = true;
+
+			return this;
+		}
+
 		[PersistedMember]
 		public abstract bool Enabled { get; set; }
 

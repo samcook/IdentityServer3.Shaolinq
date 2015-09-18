@@ -1,4 +1,3 @@
-using System;
 using IdentityServer3.Core.Models;
 using Platform.Validation;
 using Shaolinq;
@@ -8,6 +7,29 @@ namespace IdentityServer3.Shaolinq.DataModel
 	[DataAccessObject(Name = "Client")]
 	public abstract class DbClient : DataAccessObject<string>
 	{
+		public DbClient SetDefaults()
+		{
+			this.Flow = Flows.Implicit;
+			this.Enabled = true;
+			this.EnableLocalLogin = true;
+			this.AllowAccessToAllScopes = false;
+			this.AllowAccessToAllGrantTypes = false;
+			this.AlwaysSendClientClaims = false;
+			this.PrefixClientClaims = true;
+			this.AuthorizationCodeLifetime = 300;
+			this.IdentityTokenLifetime = 300;
+			this.AccessTokenLifetime = 3600;
+			this.AbsoluteRefreshTokenLifetime = 2592000;
+			this.SlidingRefreshTokenLifetime = 1296000;
+			this.RefreshTokenUsage = TokenUsage.OneTimeOnly;
+			this.RefreshTokenExpiration = TokenExpiration.Absolute;
+			this.AccessTokenType = AccessTokenType.Jwt;
+			this.RequireConsent = true;
+			this.AllowRememberConsent = true;
+
+			return this;
+		}
+
 		[PrimaryKey]
 		[PersistedMember(Name = "ClientId", ShortName = "Id")]
 		[SizeConstraint(MaximumLength = 200)]

@@ -1,4 +1,5 @@
 using System;
+using IdentityServer3.Core;
 using Platform.Validation;
 using Shaolinq;
 
@@ -7,6 +8,13 @@ namespace IdentityServer3.Shaolinq.DataModel
 	[DataAccessObject(Name = "ClientSecret")]
 	public abstract class DbClientSecret : DataAccessObject<Guid>
 	{
+		public DbClientSecret SetDefaults()
+		{
+			this.Type = Constants.SecretTypes.SharedSecret;
+
+			return this;
+		}
+
 		[PersistedMember]
 		[ValueRequired]
 		[SizeConstraint(MaximumLength = 250)]
