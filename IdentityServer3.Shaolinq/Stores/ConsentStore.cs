@@ -20,7 +20,7 @@ namespace IdentityServer3.Shaolinq.Stores
 
 		public Task<IEnumerable<Consent>> LoadAllAsync(string subject)
 		{
-			var found = dataModel.Consents.WhereForUpdate(x => x.Subject == subject);
+			var found = dataModel.Consents.Where(x => x.Subject == subject);
 
 			var results = found.Select(x => new Consent
 			{

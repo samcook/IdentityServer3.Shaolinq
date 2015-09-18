@@ -88,10 +88,10 @@ namespace IdentityServer3.Shaolinq.Stores
 		private JsonSerializerSettings GetJsonSerializerSettings()
 		{
 			var settings = new JsonSerializerSettings();
-			settings.Converters.Add(new ClaimConverter()); // TODO
-			settings.Converters.Add(new ClaimsPrincipalConverter()); // TODO
-			settings.Converters.Add(new ClientConverter(clientStore)); // TODO
-			settings.Converters.Add(new ScopeConverter(scopeStore)); // TODO
+			settings.Converters.Add(new ClaimConverter());
+			settings.Converters.Add(new ClaimsPrincipalConverter());
+			settings.Converters.Add(new ClientConverter(clientStore));
+			settings.Converters.Add(new ScopeConverter(scopeStore));
 			return settings;
 		}
 	}
