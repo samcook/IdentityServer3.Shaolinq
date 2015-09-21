@@ -70,7 +70,7 @@ namespace IdentityServer3.Shaolinq.Stores
 
 			if (found == null)
 			{
-				return null;
+				return Task.FromResult<Consent>(null);
 			}
 
 			var result = new Consent
