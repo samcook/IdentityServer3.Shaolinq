@@ -33,21 +33,16 @@ namespace IdentityServer3.Shaolinq.DataModel
 		{
 			get
 			{
-				return new DateTimeOffset(ExpiryDateTime, ExpiryOffset);
+				return new DateTimeOffset(ExpiryDateTime);
 			}
 			set
 			{
-				ExpiryDateTime = value.DateTime;
-				ExpiryOffset = value.Offset;
+				ExpiryDateTime = value.UtcDateTime;
 			}
 		}
 
 		[PersistedMember]
 		[ValueRequired]
 		public abstract DateTime ExpiryDateTime { get; set; }
-
-		[PersistedMember]
-		[ValueRequired]
-		public abstract TimeSpan ExpiryOffset { get; set; }
 	}
 }
