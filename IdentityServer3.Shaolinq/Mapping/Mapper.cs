@@ -41,7 +41,10 @@ namespace IdentityServer3.Shaolinq.Mapping
 		{
 			var scope = Mapper.Map<Scope>(scopeAndClaims.Key);
 
-			scope.Claims = scopeAndClaims.Select(Mapper.Map<ScopeClaim>).ToList();
+			if (scopeAndClaims.Any(x => x != null))
+			{
+				scope.Claims = scopeAndClaims.Where(x => x != null).Select(Mapper.Map<ScopeClaim>).ToList();
+			}
 
 			return scope;
 		}
