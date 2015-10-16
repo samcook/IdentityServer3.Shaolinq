@@ -19,6 +19,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		public abstract string Value { get; set; }
 
 		[BackReference]
+		[Index]
 		public abstract DbClient Client { get; set; }
 	}
 }

@@ -24,6 +24,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		[PersistedMember]
 		[ValueRequired]
 		[SizeConstraint(MaximumLength = 200)]
+		[Index]
 		public abstract string Name { get; set; }
 
 		[PersistedMember]

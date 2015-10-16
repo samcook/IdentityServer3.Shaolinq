@@ -47,6 +47,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		public abstract DateTime? ExpirationDateTime { get; set; }
 
 		[BackReference]
+		[Index]
 		public abstract DbClient Client { get; set; }
 	}
 }

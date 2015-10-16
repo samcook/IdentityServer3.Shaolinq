@@ -20,6 +20,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 		public abstract bool AlwaysIncludeInIdToken { get; set; }
 
 		[BackReference]
+		[Index]
 		public abstract DbScope Scope { get; set; }
 	}
 }
