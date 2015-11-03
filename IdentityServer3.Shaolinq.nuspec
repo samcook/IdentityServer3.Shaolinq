@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>IdentityServer3.Shaolinq</id>
-		<version>1.0.0-alpha8</version>
+		<version>1.0.0-alpha9</version>
 		<title>IdentityServer3.Shaolinq</title>
 		<authors>Sam Cook</authors>
 		<owners>Sam Cook</owners>
@@ -20,7 +20,7 @@
 			<dependency id="AutoMapper" version="4.0.0" />
 			<dependency id="Newtonsoft.Json" version="7.0.0" />
 			<dependency id="IdentityServer3" version="2.0.0" />
-			<dependency id="Shaolinq" version="0.9.1.408"/>
+			<dependency id="Shaolinq" version="1.0.0.458-rc" />
 		</dependencies>
 	</metadata>
 	<files>
