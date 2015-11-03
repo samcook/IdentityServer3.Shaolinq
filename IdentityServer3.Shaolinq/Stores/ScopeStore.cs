@@ -21,7 +21,8 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			var query =
 				from scope in dataModel.Scopes
-				join scopeClaim in dataModel.ScopeClaims.DefaultIfEmpty() on scope equals scopeClaim.Scope
+				join sc in dataModel.ScopeClaims on scope equals sc.Scope into g
+				from scopeClaim in g.DefaultIfEmpty()
 				select new
 				{
 					Scope = scope,

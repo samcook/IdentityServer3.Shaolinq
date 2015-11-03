@@ -53,16 +53,16 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Platform, Version=1.1.0.204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Platform.NET.1.1.0.204\lib\net40\Platform.dll</HintPath>
+    <Reference Include="Platform, Version=1.1.0.223, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Platform.NET.1.1.0.223\lib\net40\Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Platform.Xml.Serialization, Version=1.1.0.204, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Platform.Xml.Serialization.1.1.0.204\lib\net40\Platform.Xml.Serialization.dll</HintPath>
+    <Reference Include="Platform.Xml.Serialization, Version=1.1.0.223, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Platform.Xml.Serialization.1.1.0.223\lib\net40\Platform.Xml.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Shaolinq, Version=0.9.1.408, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Shaolinq.0.9.1.408\lib\40\Shaolinq.dll</HintPath>
+    <Reference Include="Shaolinq, Version=1.0.0.458, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shaolinq.1.0.0.458-rc\lib\40\Shaolinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
