@@ -30,11 +30,11 @@ namespace IdentityServer3.Shaolinq.Stores
 					token.Key = key;
 					token.SubjectId = value.SubjectId;
 					token.ClientId = value.ClientId;
-					token.JsonCode = ConvertToJson(value); // TODO bug? https://github.com/IdentityServer/IdentityServer3.EntityFramework/issues/65
+					token.JsonCode = ConvertToJson(value);
 					token.TokenType = this.TokenType;
 				}
 
-				token.Expiry = DateTimeOffset.UtcNow.AddSeconds(value.LifeTime);
+				token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
 
 				scope.Complete();
 			}
