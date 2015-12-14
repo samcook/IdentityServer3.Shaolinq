@@ -30,8 +30,6 @@ namespace IdentityServer3.Shaolinq.DataModel
 			return this;
 		}
 
-		[PrimaryKey]
-		[PersistedMember(Name = "ClientId", ShortName = "Id")]
 		[SizeConstraint(MaximumLength = 200)]
 		public override string Id { get; set; }
 
