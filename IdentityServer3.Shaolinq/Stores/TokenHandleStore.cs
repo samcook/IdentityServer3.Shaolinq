@@ -15,9 +15,9 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 		}
 
-		public override Task StoreAsync(string key, Token value)
+		public override async Task StoreAsync(string key, Token value)
 		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
 				var token = this.DataModel.Tokens.Create();
 
@@ -29,10 +29,8 @@ namespace IdentityServer3.Shaolinq.Stores
 				token.Expiry = DateTimeOffset.UtcNow.AddSeconds(value.Lifetime);
 				token.TokenType = this.TokenType;
 
-				scope.Complete();
+				await scope.CompleteAsync();
 			}
-
-			return Task.FromResult(0);
 		}
 	}
 }

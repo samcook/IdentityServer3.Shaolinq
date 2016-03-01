@@ -1,5 +1,4 @@
 using System;
-using IdentityServer3.Core.Models;
 using Platform.Validation;
 using Shaolinq;
 

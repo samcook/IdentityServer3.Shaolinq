@@ -18,18 +18,18 @@ namespace IdentityServer3.Shaolinq.Stores
 			this.dataModel = dataModel;
 		}
 
-		public Task<IEnumerable<Consent>> LoadAllAsync(string subject)
+		public async Task<IEnumerable<Consent>> LoadAllAsync(string subject)
 		{
 			var found = dataModel.Consents.Where(x => x.Subject == subject);
 
-			var results = found.Select(x => new Consent
+			var results = await found.Select(x => new Consent
 			{
 				Subject = x.Subject,
 				ClientId = x.ClientId,
 				Scopes = ParseScopes(x.Scopes)
-			});
+			}).ToListAsync();
 
-			return Task.FromResult(results.ToArray().AsEnumerable());
+		    return results;
 		}
 
 		private static IEnumerable<string> ParseScopes(string scopes)
@@ -52,25 +52,23 @@ namespace IdentityServer3.Shaolinq.Stores
 			return scopes.Aggregate((s1, s2) => s1 + "," + s2);
 		}
 
-		public Task RevokeAsync(string subject, string client)
+		public async Task RevokeAsync(string subject, string client)
 		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
-				dataModel.Consents.DeleteWhere(x => x.Subject == subject && x.ClientId == client);
+				await dataModel.Consents.DeleteAsync(x => x.Subject == subject && x.ClientId == client);
 
-				scope.Complete();
+				await scope.CompleteAsync();
 			}
-
-			return Task.FromResult(0);
 		}
 
-		public Task<Consent> LoadAsync(string subject, string client)
+		public async Task<Consent> LoadAsync(string subject, string client)
 		{
-			var found = dataModel.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == client);
+			var found = await dataModel.Consents.SingleOrDefaultAsync(x => x.Subject == subject && x.ClientId == client);
 
 			if (found == null)
 			{
-				return Task.FromResult<Consent>(null);
+			    return null;
 			}
 
 			var result = new Consent
@@ -80,21 +78,18 @@ namespace IdentityServer3.Shaolinq.Stores
 				Scopes = ParseScopes(found.Scopes)
 			};
 
-			return Task.FromResult(result);
+            return result;
 		}
 
-		public Task UpdateAsync(Consent consent)
+		public async Task UpdateAsync(Consent consent)
 		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
 				var item = dataModel.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
 
 				if (consent.Scopes == null || !consent.Scopes.Any())
 				{
-					if (item != null)
-					{
-						item.Delete();
-					}
+				    item?.Delete();
 				}
 				else
 				{
@@ -109,10 +104,8 @@ namespace IdentityServer3.Shaolinq.Stores
 					item.Scopes = StringifyScopes(consent.Scopes);
 				}
 
-				scope.Complete();
+				await scope.CompleteAsync();
 			}
-
-			return Task.FromResult(0);
 		}
 	}
 }

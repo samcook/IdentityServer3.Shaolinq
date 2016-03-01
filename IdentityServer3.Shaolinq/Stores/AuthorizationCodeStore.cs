@@ -15,9 +15,9 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 		}
 
-		public override Task StoreAsync(string key, AuthorizationCode code)
+		public override async Task StoreAsync(string key, AuthorizationCode code)
 		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
 				var authCode = this.DataModel.Tokens.Create();
 
@@ -29,10 +29,8 @@ namespace IdentityServer3.Shaolinq.Stores
 				authCode.Expiry = DateTimeOffset.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime);
 				authCode.TokenType = this.TokenType;
 
-				scope.Complete();
+				await scope.CompleteAsync();
 			}
-
-			return Task.FromResult(0);
 		}
 	}
 }
