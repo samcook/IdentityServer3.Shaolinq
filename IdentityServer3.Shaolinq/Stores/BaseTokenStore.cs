@@ -30,49 +30,45 @@ namespace IdentityServer3.Shaolinq.Stores
 
 		public abstract Task StoreAsync(string key, TToken value);
 
-		public Task<TToken> GetAsync(string key)
+		public async Task<TToken> GetAsync(string key)
 		{
-			var token = DataModel.Tokens.SingleOrDefault(x => x.Key == key && x.TokenType == TokenType);
+			var token = await DataModel.Tokens.SingleOrDefaultAsync(x => x.Key == key && x.TokenType == TokenType);
 
 			if (token == null || token.Expiry < DateTimeOffset.UtcNow)
 			{
-				return Task.FromResult<TToken>(null);
+                return null;
 			}
 
-			return Task.FromResult(ConvertFromJson(token.JsonCode));
+		    return ConvertFromJson(token.JsonCode);
 		}
 
-		public Task RemoveAsync(string key)
+		public async Task RemoveAsync(string key)
 		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
-				DataModel.Tokens.DeleteWhere(x => x.Key == key && x.TokenType == TokenType);
+				await DataModel.Tokens.DeleteAsync(x => x.Key == key && x.TokenType == TokenType);
 
-				scope.Complete();
+				await scope.CompleteAsync();
 			}
-
-			return Task.FromResult(0);
 		}
 
-		public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
+		public async Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
 		{
 			var tokens = DataModel.Tokens.Where(x => x.SubjectId == subject && x.TokenType == TokenType);
 
-			var results = tokens.ToList().Select(x => ConvertFromJson(x.JsonCode));
+			var results = (await tokens.ToListAsync()).Select(x => ConvertFromJson(x.JsonCode));
 
-			return Task.FromResult(results.Cast<ITokenMetadata>());
+		    return results.Cast<ITokenMetadata>();
 		}
 
-		public Task RevokeAsync(string subject, string client)
+		public async Task RevokeAsync(string subject, string client)
 		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
-				DataModel.Tokens.DeleteWhere(x => x.SubjectId == subject && x.ClientId == client && x.TokenType == TokenType);
+				await DataModel.Tokens.DeleteAsync(x => x.SubjectId == subject && x.ClientId == client && x.TokenType == TokenType);
 
-				scope.Complete();
+				await scope.CompleteAsync();
 			}
-
-			return Task.FromResult(0);
 		}
 
 		protected string ConvertToJson(TToken value)

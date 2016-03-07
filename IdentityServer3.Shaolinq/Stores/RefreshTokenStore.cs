@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
@@ -16,30 +15,28 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 		}
 
-		public override Task StoreAsync(string key, RefreshToken value)
-		{
-			using (var scope = TransactionScopeFactory.CreateReadCommitted())
-			{
-				var token = DataModel.Tokens.SingleOrDefault(x => x.Key == key && x.TokenType == this.TokenType);
+	    public override async Task StoreAsync(string key, RefreshToken value)
+	    {
+	        using (var scope = DataAccessScope.CreateReadCommitted())
+	        {
+	            var token = await DataModel.Tokens.SingleOrDefaultAsync(x => x.Key == key && x.TokenType == this.TokenType);
 
-				if (token == null)
-				{
-					token = DataModel.Tokens.Create();
+	            if (token == null)
+	            {
+	                token = DataModel.Tokens.Create();
 
-					token.Id = Guid.NewGuid();
-					token.Key = key;
-					token.SubjectId = value.SubjectId;
-					token.ClientId = value.ClientId;
-					token.JsonCode = ConvertToJson(value);
-					token.TokenType = this.TokenType;
-				}
+	                token.Id = Guid.NewGuid();
+	                token.Key = key;
+	                token.SubjectId = value.SubjectId;
+	                token.ClientId = value.ClientId;
+	                token.JsonCode = ConvertToJson(value);
+	                token.TokenType = this.TokenType;
+	            }
 
-				token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
+	            token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
 
-				scope.Complete();
-			}
-
-			return Task.FromResult(0);
-		}
+	            await scope.CompleteAsync();
+	        }
+	    }
 	}
 }
