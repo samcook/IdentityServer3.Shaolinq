@@ -78,7 +78,7 @@ namespace IdentityServer3.Shaolinq
 					// TODO is this correct with DateTimeOffsets (can't use Expiry property as it is a local property, not persisted)
 					await dataModel.Tokens.DeleteAsync(x => x.ExpiryDateTime < DateTime.UtcNow);
 
-				    await scope.CompleteAsync();
+					await scope.CompleteAsync();
 				}
 			}
 			catch (Exception ex)

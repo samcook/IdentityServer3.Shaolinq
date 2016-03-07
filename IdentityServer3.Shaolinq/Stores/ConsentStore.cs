@@ -29,7 +29,7 @@ namespace IdentityServer3.Shaolinq.Stores
 				Scopes = ParseScopes(x.Scopes)
 			}).ToListAsync();
 
-		    return results;
+			return results;
 		}
 
 		private static IEnumerable<string> ParseScopes(string scopes)
@@ -68,7 +68,7 @@ namespace IdentityServer3.Shaolinq.Stores
 
 			if (found == null)
 			{
-			    return null;
+				return null;
 			}
 
 			var result = new Consent
@@ -78,7 +78,7 @@ namespace IdentityServer3.Shaolinq.Stores
 				Scopes = ParseScopes(found.Scopes)
 			};
 
-            return result;
+			return result;
 		}
 
 		public async Task UpdateAsync(Consent consent)
@@ -89,7 +89,7 @@ namespace IdentityServer3.Shaolinq.Stores
 
 				if (consent.Scopes == null || !consent.Scopes.Any())
 				{
-				    item?.Delete();
+					item?.Delete();
 				}
 				else
 				{

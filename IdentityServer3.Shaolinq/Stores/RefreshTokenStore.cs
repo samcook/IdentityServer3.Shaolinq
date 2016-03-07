@@ -15,28 +15,28 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 		}
 
-	    public override async Task StoreAsync(string key, RefreshToken value)
-	    {
-	        using (var scope = DataAccessScope.CreateReadCommitted())
-	        {
-	            var token = await DataModel.Tokens.SingleOrDefaultAsync(x => x.Key == key && x.TokenType == this.TokenType);
+		public override async Task StoreAsync(string key, RefreshToken value)
+		{
+			using (var scope = DataAccessScope.CreateReadCommitted())
+			{
+				var token = await DataModel.Tokens.SingleOrDefaultAsync(x => x.Key == key && x.TokenType == this.TokenType);
 
-	            if (token == null)
-	            {
-	                token = DataModel.Tokens.Create();
+				if (token == null)
+				{
+					token = DataModel.Tokens.Create();
 
-	                token.Id = Guid.NewGuid();
-	                token.Key = key;
-	                token.SubjectId = value.SubjectId;
-	                token.ClientId = value.ClientId;
-	                token.JsonCode = ConvertToJson(value);
-	                token.TokenType = this.TokenType;
-	            }
+					token.Id = Guid.NewGuid();
+					token.Key = key;
+					token.SubjectId = value.SubjectId;
+					token.ClientId = value.ClientId;
+					token.JsonCode = ConvertToJson(value);
+					token.TokenType = this.TokenType;
+				}
 
-	            token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
+				token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
 
-	            await scope.CompleteAsync();
-	        }
-	    }
+				await scope.CompleteAsync();
+			}
+		}
 	}
 }

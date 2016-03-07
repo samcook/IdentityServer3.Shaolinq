@@ -36,10 +36,10 @@ namespace IdentityServer3.Shaolinq.Stores
 
 			if (token == null || token.Expiry < DateTimeOffset.UtcNow)
 			{
-                return null;
+				return null;
 			}
 
-		    return ConvertFromJson(token.JsonCode);
+			return ConvertFromJson(token.JsonCode);
 		}
 
 		public async Task RemoveAsync(string key)
@@ -58,7 +58,7 @@ namespace IdentityServer3.Shaolinq.Stores
 
 			var results = (await tokens.ToListAsync()).Select(x => ConvertFromJson(x.JsonCode));
 
-		    return results.Cast<ITokenMetadata>();
+			return results.Cast<ITokenMetadata>();
 		}
 
 		public async Task RevokeAsync(string subject, string client)
