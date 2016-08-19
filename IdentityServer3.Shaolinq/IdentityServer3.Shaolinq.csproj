@@ -49,16 +49,16 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Platform, Version=1.2.1.276, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Platform.NET.1.2.1.276\lib\net452\Platform.dll</HintPath>
+    <Reference Include="Platform, Version=1.2.1.287, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Platform.NET.1.2.1.287\lib\net452\Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Platform.Xml.Serialization, Version=1.2.1.276, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Platform.Xml.Serialization.1.2.1.276\lib\net452\Platform.Xml.Serialization.dll</HintPath>
+    <Reference Include="Platform.Xml.Serialization, Version=1.2.1.287, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Platform.Xml.Serialization.1.2.1.287\lib\net452\Platform.Xml.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Shaolinq, Version=1.0.1.764, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Shaolinq.1.0.1.764-rc\lib\net452\Shaolinq.dll</HintPath>
+    <Reference Include="Shaolinq, Version=1.1.0.971, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shaolinq.1.1.0.971\lib\net452\Shaolinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
