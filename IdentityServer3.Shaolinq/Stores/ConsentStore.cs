@@ -85,7 +85,7 @@ namespace IdentityServer3.Shaolinq.Stores
 		{
 			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
-				var item = dataModel.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
+				var item = await dataModel.Consents.SingleOrDefaultAsync(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
 
 				if (consent.Scopes == null || !consent.Scopes.Any())
 				{

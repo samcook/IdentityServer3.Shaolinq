@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using IdentityServer3.Core.Services;
 using IdentityServer3.Shaolinq.DataModel.Interfaces;
 using IdentityServer3.Shaolinq.Extensions;
+using Shaolinq;
 
 namespace IdentityServer3.Shaolinq.Services
 {
@@ -16,15 +17,15 @@ namespace IdentityServer3.Shaolinq.Services
 			this.dataModel = dataModel;
 		}
 
-		public Task<bool> IsOriginAllowedAsync(string origin)
+		public async Task<bool> IsOriginAllowedAsync(string origin)
 		{
-			var foo = dataModel.ClientCorsOrigins.Select(x => x.Origin);
+			var dbOrigins = await dataModel.ClientCorsOrigins.Select(x => x.Origin).ToListAsync();
 
-			var origins = foo.ToList().Select(x => x.GetOrigin()).Where(x => x != null).Distinct();
+			var origins = dbOrigins.Select(x => x.GetOrigin()).Where(x => x != null).Distinct();
 
 			var result = origins.Contains(origin, StringComparer.OrdinalIgnoreCase);
 
-			return Task.FromResult(result);
+			return result;
 		}
 	}
 }
