@@ -26,6 +26,7 @@ namespace IdentityServer3.Shaolinq.DataModel
 			this.AccessTokenType = AccessTokenType.Jwt;
 			this.RequireConsent = true;
 			this.AllowRememberConsent = true;
+			this.AllowAccessTokensViaBrowser = true;
 
 			return this;
 		}
@@ -53,6 +54,8 @@ namespace IdentityServer3.Shaolinq.DataModel
 		public abstract bool RequireConsent { get; set; }
 		[PersistedMember]
 		public abstract bool AllowRememberConsent { get; set; }
+		[PersistedMember]
+		public abstract bool AllowAccessTokensViaBrowser { get; set; }
 
 		[PersistedMember]
 		public abstract Flows Flow { get; set; }
