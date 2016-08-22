@@ -57,8 +57,8 @@
       <HintPath>..\packages\Platform.Xml.Serialization.1.2.1.287\lib\net452\Platform.Xml.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Shaolinq, Version=1.1.0.971, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Shaolinq.1.1.0.971\lib\net452\Shaolinq.dll</HintPath>
+    <Reference Include="Shaolinq, Version=1.1.0.975, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shaolinq.1.1.0.975\lib\net452\Shaolinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
