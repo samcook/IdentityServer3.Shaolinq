@@ -96,6 +96,7 @@
     <Compile Include="Serialization\ClaimConverter.cs" />
     <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />
     <Compile Include="Serialization\ClientConverter.cs" />
+    <Compile Include="Serialization\ConverterContractResolver.cs" />
     <Compile Include="Serialization\ScopeConverter.cs" />
     <Compile Include="Services\ClientConfigurationCorsPolicyService.cs" />
     <Compile Include="ShaolinqServiceOptions.cs" />

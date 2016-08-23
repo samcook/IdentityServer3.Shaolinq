@@ -20,12 +20,16 @@ namespace IdentityServer3.Shaolinq.Stores
 		private readonly IClientStore clientStore;
 		private readonly IScopeStore scopeStore;
 
+		private readonly JsonSerializerSettings jsonSerializerSettings;
+
 		protected BaseTokenStore(IIdentityServerOperationalDataAccessModel dataModel, DbTokenType tokenType, IClientStore clientStore, IScopeStore scopeStore)
 		{
 			this.DataModel = dataModel;
 			this.TokenType = tokenType;
 			this.clientStore = clientStore;
 			this.scopeStore = scopeStore;
+
+			this.jsonSerializerSettings = GetJsonSerializerSettings();
 		}
 
 		public abstract Task StoreAsync(string key, TToken value);
@@ -73,21 +77,21 @@ namespace IdentityServer3.Shaolinq.Stores
 
 		protected string ConvertToJson(TToken value)
 		{
-			return JsonConvert.SerializeObject(value, GetJsonSerializerSettings());
+			return JsonConvert.SerializeObject(value, jsonSerializerSettings);
 		}
 
 		protected TToken ConvertFromJson(string json)
 		{
-			return JsonConvert.DeserializeObject<TToken>(json, GetJsonSerializerSettings());
+			return JsonConvert.DeserializeObject<TToken>(json, jsonSerializerSettings);
 		}
 
 		private JsonSerializerSettings GetJsonSerializerSettings()
 		{
-			var settings = new JsonSerializerSettings();
-			settings.Converters.Add(new ClaimConverter());
-			settings.Converters.Add(new ClaimsPrincipalConverter());
-			settings.Converters.Add(new ClientConverter(clientStore));
-			settings.Converters.Add(new ScopeConverter(scopeStore));
+			var settings = new JsonSerializerSettings
+			{
+				ContractResolver = new ConverterContractResolver(clientStore, scopeStore)
+			};
+
 			return settings;
 		}
 	}
