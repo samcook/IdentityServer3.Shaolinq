@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>IdentityServer3.Shaolinq</id>
-		<version>1.1.1-alpha</version>
+		<version>1.1.2-alpha</version>
 		<title>IdentityServer3.Shaolinq</title>
 		<authors>Sam Cook</authors>
 		<owners>Sam Cook</owners>
@@ -12,6 +12,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>A persistence provider for IdentityServer3 using Shaolinq</description>
 		<releaseNotes>
+1.1.2-alpha - Fix deserialisation deadlock issue
 1.1.1-alpha - Rebuild with new Shaolinq due to breaking change with ToListAsync()
 1.1.0-alpha - Update Shaolinq, update IdentityServer3 to 2.5.1
 1.0.4-alpha - Update Shaolinq
