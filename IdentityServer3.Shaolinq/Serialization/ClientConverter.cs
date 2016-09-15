@@ -32,8 +32,7 @@ namespace IdentityServer3.Shaolinq.Serialization
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var source = serializer.Deserialize<ClientLite>(reader);
-			//return AsyncHelper.RunSync(async () => await clientStore.FindClientByIdAsync(source.ClientId));
-			return clientStore.FindClientByIdAsync(source.ClientId).Result;
+			return AsyncHelper.RunSync(async () => await clientStore.FindClientByIdAsync(source.ClientId));
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

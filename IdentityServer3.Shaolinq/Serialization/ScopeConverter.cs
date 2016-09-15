@@ -30,8 +30,7 @@ namespace IdentityServer3.Shaolinq.Serialization
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var source = serializer.Deserialize<ScopeLite>(reader);
-			//var scopes = AsyncHelper.RunSync(async () => await scopeStore.FindScopesAsync(new string[] { source.Name }));
-			var scopes = scopeStore.FindScopesAsync(new[] { source.Name }).Result;
+			var scopes = AsyncHelper.RunSync(async () => await scopeStore.FindScopesAsync(new[] {source.Name}));
 			return scopes.Single();
 		}
 
