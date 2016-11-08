@@ -65,25 +65,24 @@ namespace IdentityServer3.Shaolinq
 					break;
 				}
 
-				await ClearTokens();
+				try
+				{
+					await ClearExpiredTokensAsync(dataModel);
+				}
+				catch (Exception ex)
+				{
+					Logger.ErrorException("Error clearing tokens", ex);
+				}
 			}
 		}
 
-		private async Task ClearTokens()
+		public static async Task ClearExpiredTokensAsync(IIdentityServerOperationalDataAccessModel dataModel)
 		{
-			try
+			using (var scope = DataAccessScope.CreateReadCommitted())
 			{
-				using (var scope = DataAccessScope.CreateReadCommitted())
-				{
-					// TODO is this correct with DateTimeOffsets (can't use Expiry property as it is a local property, not persisted)
-					await dataModel.Tokens.DeleteAsync(x => x.ExpiryDateTime < DateTime.UtcNow);
+				await dataModel.Tokens.DeleteAsync(x => x.ExpiryDateTime < DateTime.UtcNow.AddDays(-1));
 
-					await scope.CompleteAsync();
-				}
-			}
-			catch (Exception ex)
-			{
-				Logger.ErrorException("Error clearing tokens", ex);
+				await scope.CompleteAsync();
 			}
 		}
 	}
